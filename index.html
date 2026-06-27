@@ -68,6 +68,26 @@
     border-radius: 30px; font-size: 0.9rem; font-weight: 600; box-shadow: var(--shadow);
   }
 
+  /* ============ DỊCH VỤ MIỄN PHÍ ============ */
+  .services { max-width: 1100px; margin: 32px auto 0; padding: 0 20px; text-align: center; }
+  .services h2 { font-size: 1.5rem; color: var(--primary-dark); }
+  .services-sub { color: var(--muted); margin: 6px 0 20px; }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 14px;
+  }
+  .service-card {
+    position: relative; background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px 14px 16px; transition: transform .15s, box-shadow .15s;
+  }
+  .service-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .service-card .svc-icon { font-size: 2.3rem; display: block; margin-bottom: 8px; }
+  .service-card h3 { font-size: 1rem; color: var(--primary-dark); margin-bottom: 4px; }
+  .service-card p { font-size: 0.82rem; color: var(--muted); }
+  .free-tag {
+    position: absolute; top: 10px; right: 10px; background: var(--accent); color: #fff;
+    font-size: 0.68rem; font-weight: 700; padding: 3px 8px; border-radius: 20px; text-transform: uppercase;
+  }
+
   /* ============ THANH LỌC & TÌM KIẾM ============ */
   .controls {
     max-width: 1100px; margin: 26px auto 0; padding: 0 20px;
@@ -232,6 +252,20 @@
     <span>🚚 Miễn phí ship từ 100.000₫</span>
     <span>❄️ Luôn mát lạnh</span>
     <span>⏰ Mở cửa 6:00 - 22:00</span>
+  </div>
+</section>
+
+<!-- ============ DỊCH VỤ MIỄN PHÍ ============ -->
+<section class="services">
+  <h2>🎁 Dịch vụ miễn phí đi kèm</h2>
+  <p class="services-sub">Giao tận sân cầu lông — và hỗ trợ hết mình cho anh em chơi cầu!</p>
+  <div class="services-grid">
+    <div class="service-card"><span class="free-tag">Miễn phí</span><span class="svc-icon">🏸</span><h3>Giao tại sân cầu</h3><p>Ship tận sân, vừa xuống sân là có nước mát.</p></div>
+    <div class="service-card"><span class="free-tag">Miễn phí</span><span class="svc-icon">🛒</span><h3>Mua cầu hộ</h3><p>Hết cầu giữa trận? Gọi shop mua hộ ngay.</p></div>
+    <div class="service-card"><span class="free-tag">Miễn phí</span><span class="svc-icon">🎯</span><h3>Mượn vợt hộ</h3><p>Quên vợt? Shop cho mượn liền tay.</p></div>
+    <div class="service-card"><span class="free-tag">Miễn phí</span><span class="svc-icon">🧵</span><h3>Cuốn cán hộ</h3><p>Cuốn cán vợt giúp, cầm chắc tay hơn.</p></div>
+    <div class="service-card"><span class="free-tag">Miễn phí</span><span class="svc-icon">🍜</span><h3>Mua đồ ăn hộ</h3><p>Đói bụng? Order đồ ăn, shop mua giúp.</p></div>
+    <div class="service-card"><span class="free-tag">Miễn phí</span><span class="svc-icon">📸</span><h3>Chụp ảnh hộ</h3><p>Lưu lại khoảnh khắc đỉnh cao trên sân.</p></div>
   </div>
 </section>
 
