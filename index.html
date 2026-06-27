@@ -278,31 +278,31 @@
    ============================================================ */
 const PRODUCTS = [
   // --- Nước suối / khoáng ---
-  { id: 1,  name: "Nước suối Lavie 500ml",   category: "Nước suối",   price: 5000,  unit: "chai", desc: "Nước khoáng thiên nhiên, tinh khiết.",        icon: "💧" },
-  { id: 2,  name: "Aquafina 500ml",          category: "Nước suối",   price: 5000,  unit: "chai", desc: "Nước tinh khiết đóng chai Pepsi.",            icon: "💦" },
-  { id: 3,  name: "Nước khoáng Vĩnh Hảo 1.5L",category: "Nước suối",  price: 12000, unit: "chai", desc: "Chai lớn dùng cho gia đình.",                 icon: "🫗" },
+  { id: 1,  name: "Nước suối Lavie 500ml",   category: "Nước suối",   price: 5000,  unit: "chai", desc: "Nước khoáng thiên nhiên, tinh khiết.",        icon: "💧", image: "images/1.jpg" },
+  { id: 2,  name: "Aquafina 500ml",          category: "Nước suối",   price: 5000,  unit: "chai", desc: "Nước tinh khiết đóng chai Pepsi.",            icon: "💦", image: "images/2.png" },
+  { id: 3,  name: "Nước khoáng Vĩnh Hảo 1.5L",category: "Nước suối",  price: 12000, unit: "chai", desc: "Chai lớn dùng cho gia đình.",                 icon: "🫗", image: "images/3.jpg" },
 
   // --- Nước ngọt có gas ---
-  { id: 4,  name: "Coca-Cola lon 330ml",     category: "Nước ngọt",   price: 10000, unit: "lon",  desc: "Vị cola sảng khoái kinh điển.",               icon: "🥤" },
-  { id: 5,  name: "Pepsi lon 330ml",         category: "Nước ngọt",   price: 10000, unit: "lon",  desc: "Đậm vị, đã khát tức thì.",                    icon: "🥤" },
-  { id: 6,  name: "7Up lon 330ml",           category: "Nước ngọt",   price: 10000, unit: "lon",  desc: "Vị chanh the mát lạnh.",                      icon: "🍋" },
-  { id: 7,  name: "Sprite chai 600ml",       category: "Nước ngọt",   price: 12000, unit: "chai", desc: "Soda chanh, sủi bọt tươi mát.",               icon: "🥤" },
+  { id: 4,  name: "Coca-Cola lon 330ml",     category: "Nước ngọt",   price: 10000, unit: "lon",  desc: "Vị cola sảng khoái kinh điển.",               icon: "🥤", image: "images/4.jpg" },
+  { id: 5,  name: "Pepsi lon 330ml",         category: "Nước ngọt",   price: 10000, unit: "lon",  desc: "Đậm vị, đã khát tức thì.",                    icon: "🥤", image: "images/5.png" },
+  { id: 6,  name: "7Up lon 330ml",           category: "Nước ngọt",   price: 10000, unit: "lon",  desc: "Vị chanh the mát lạnh.",                      icon: "🍋", image: "images/6.jpg" },
+  { id: 7,  name: "Sprite chai 600ml",       category: "Nước ngọt",   price: 12000, unit: "chai", desc: "Soda chanh, sủi bọt tươi mát.",               icon: "🥤", image: "images/7.jpg" },
 
   // --- Trà / nước trái cây ---
-  { id: 8,  name: "Trà Xanh 0 Độ 455ml",     category: "Trà",         price: 9000,  unit: "chai", desc: "Trà xanh thanh mát, không lo nóng.",          icon: "🍵" },
-  { id: 9,  name: "Trà C2 360ml",            category: "Trà",         price: 8000,  unit: "chai", desc: "Trà ô long hương chanh.",                     icon: "🍃" },
-  { id: 10, name: "Nước cam Twister 455ml",  category: "Trà",         price: 12000, unit: "chai", desc: "Nước cam ép, giàu vitamin C.",                icon: "🍊" },
-  { id: 11, name: "Trà Dr Thanh 350ml",      category: "Trà",         price: 9000,  unit: "chai", desc: "Trà thảo mộc thanh nhiệt.",                   icon: "🌿" },
+  { id: 8,  name: "Trà Xanh 0 Độ 455ml",     category: "Trà",         price: 9000,  unit: "chai", desc: "Trà xanh thanh mát, không lo nóng.",          icon: "🍵", image: "images/8.jpg" },
+  { id: 9,  name: "Trà C2 360ml",            category: "Trà",         price: 8000,  unit: "chai", desc: "Trà ô long hương chanh.",                     icon: "🍃", image: "images/9.jpg" },
+  { id: 10, name: "Nước cam Twister 455ml",  category: "Trà",         price: 12000, unit: "chai", desc: "Nước cam ép, giàu vitamin C.",                icon: "🍊", image: "images/10.jpg" },
+  { id: 11, name: "Trà Dr Thanh 350ml",      category: "Trà",         price: 9000,  unit: "chai", desc: "Trà thảo mộc thanh nhiệt.",                   icon: "🌿", image: "images/11.jpg" },
 
   // --- Nước tăng lực ---
-  { id: 12, name: "Red Bull lon 250ml",      category: "Tăng lực",    price: 12000, unit: "lon",  desc: "Tiếp thêm năng lượng tức thì.",               icon: "⚡" },
-  { id: 13, name: "Sting dâu 330ml",         category: "Tăng lực",    price: 10000, unit: "lon",  desc: "Hương dâu, vị ngọt mạnh mẽ.",                 icon: "🔴" },
-  { id: 14, name: "Monster Energy 355ml",    category: "Tăng lực",    price: 22000, unit: "lon",  desc: "Năng lượng cực mạnh cho game thủ.",           icon: "🟢" },
+  { id: 12, name: "Red Bull lon 250ml",      category: "Tăng lực",    price: 12000, unit: "lon",  desc: "Tiếp thêm năng lượng tức thì.",               icon: "⚡", image: "images/12.jpg" },
+  { id: 13, name: "Sting dâu 330ml",         category: "Tăng lực",    price: 10000, unit: "lon",  desc: "Hương dâu, vị ngọt mạnh mẽ.",                 icon: "🔴", image: "images/13.jpg" },
+  { id: 14, name: "Monster Energy 355ml",    category: "Tăng lực",    price: 22000, unit: "lon",  desc: "Năng lượng cực mạnh cho game thủ.",           icon: "🟢", image: "images/14.jpg" },
 
   // --- Bia / nước khác ---
-  { id: 15, name: "Bia Tiger lon 330ml",     category: "Bia",         price: 16000, unit: "lon",  desc: "Bia lager mát lạnh (18+).",                   icon: "🍺" },
+  { id: 15, name: "Bia Tiger lon 330ml",     category: "Bia",         price: 16000, unit: "lon",  desc: "Bia lager mát lạnh (18+).",                   icon: "🍺", image: "images/15.jpg" },
   { id: 16, name: "Nước yến Sanest lọ 70ml", category: "Khác",        price: 18000, unit: "lọ",   desc: "Nước yến bổ dưỡng, tốt cho sức khỏe.",        icon: "🍯" },
-  { id: 17, name: "Cốc đá",                  category: "Khác",        price: 5000,  unit: "cốc",  desc: "Cốc đá lạnh, dùng kèm nước giải khát.",       icon: "🧊" },
+  { id: 17, name: "Cốc đá",                  category: "Khác",        price: 5000,  unit: "cốc",  desc: "Cốc đá lạnh, dùng kèm nước giải khát.",       icon: "🧊", image: "images/17.jpg" },
 ];
 
 const CART_KEY = "tap_hoa_nuoc_mat_cart";
