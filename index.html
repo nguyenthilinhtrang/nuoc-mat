@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tạp Hóa Nước Mát - Nước Đóng Chai Giao Tận Nơi</title>
+<title>Nước mát - Mart VL | Nước Đóng Chai Giao Tận Nơi</title>
 <style>
   /* ============ BIẾN MÀU & RESET ============ */
   :root {
@@ -217,7 +217,7 @@
 
 <!-- ============ HEADER ============ -->
 <header>
-  <div class="logo"><span class="drop">💧</span> Tạp Hóa Nước Mát</div>
+  <div class="logo"><span class="drop">💧</span> Nước mát - Mart VL</div>
   <button class="cart-btn" onclick="openCart()">
     🛒 <span class="label">Giỏ hàng</span>
     <span class="cart-badge" id="cartBadge">0</span>
@@ -262,7 +262,7 @@
 
 <!-- ============ FOOTER ============ -->
 <footer>
-  <div class="ft-row"><strong>Tạp Hóa Nước Mát</strong> 💧</div>
+  <div class="ft-row"><strong>Nước mát - Mart VL</strong> 💧</div>
   <div class="ft-row">📞 Hotline đặt hàng: 0900 123 456</div>
   <div class="ft-row">📍 123 Đường Giải Khát, Quận 1, TP.HCM</div>
   <div class="ft-row">⏰ Mở cửa hằng ngày 6:00 - 22:00</div>
@@ -280,6 +280,9 @@
 const ASSET_VER = "5";
 
 const PRODUCTS = [
+  // --- Nổi bật ---
+  { id: 17, name: "Cốc đá",                  category: "Khác",        price: 5000,  unit: "cốc",  desc: "Cốc đá lạnh, dùng kèm nước giải khát.",       icon: "🧊", image: "images/17.png" },
+
   // --- Nước suối / khoáng ---
   { id: 1,  name: "Nước suối Lavie 500ml",   category: "Nước suối",   price: 5000,  unit: "chai", desc: "Nước khoáng thiên nhiên, tinh khiết.",        icon: "💧", image: "images/1.png" },
   { id: 2,  name: "Aquafina 500ml",          category: "Nước suối",   price: 5000,  unit: "chai", desc: "Nước tinh khiết đóng chai Pepsi.",            icon: "💦", image: "images/2.png" },
@@ -303,8 +306,6 @@ const PRODUCTS = [
 
   // --- Bia / nước khác ---
   { id: 15, name: "Bia Tiger lon 330ml",     category: "Bia",         price: 16000, unit: "lon",  desc: "Bia lager mát lạnh (18+).",                   icon: "🍺", image: "images/15.png" },
-  { id: 16, name: "Nước yến Sanest lọ 70ml", category: "Khác",        price: 18000, unit: "lọ",   desc: "Nước yến bổ dưỡng, tốt cho sức khỏe.",        icon: "🍯" },
-  { id: 17, name: "Cốc đá",                  category: "Khác",        price: 5000,  unit: "cốc",  desc: "Cốc đá lạnh, dùng kèm nước giải khát.",       icon: "🧊", image: "images/17.png" },
 ];
 
 const CART_KEY = "tap_hoa_nuoc_mat_cart";
