@@ -102,7 +102,9 @@
   .card .thumb {
     font-size: 3.4rem; text-align: center; padding: 18px 0;
     background: linear-gradient(135deg, #f5fbff, #e8f7f4); border-radius: 12px; margin-bottom: 12px;
+    height: 150px; display: flex; align-items: center; justify-content: center; overflow: hidden;
   }
+  .card .thumb img { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
   .card .cat-tag {
     align-self: flex-start; font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
     color: var(--primary); background: #e1f5fe; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px;
@@ -139,7 +141,8 @@
   .close-btn { background: none; font-size: 1.5rem; color: var(--muted); line-height: 1; padding: 4px; }
   .drawer-body { flex: 1; overflow-y: auto; padding: 16px 20px; }
   .cart-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
-  .cart-item .ci-thumb { font-size: 2rem; width: 48px; text-align: center; }
+  .cart-item .ci-thumb { font-size: 2rem; width: 48px; text-align: center; flex-shrink: 0; }
+  .cart-item .ci-thumb img { width: 48px; height: 48px; object-fit: contain; border-radius: 8px; }
   .cart-item .ci-info { flex: 1; }
   .cart-item .ci-name { font-weight: 600; font-size: 0.95rem; }
   .cart-item .ci-price { color: var(--muted); font-size: 0.85rem; }
@@ -269,7 +272,9 @@
 /* ============================================================
    DỮ LIỆU SẢN PHẨM
    → Muốn thêm/sửa sản phẩm: chỉnh trong mảng PRODUCTS bên dưới.
-   Mỗi sản phẩm: { id, name, category, price (VND), unit, desc, icon }
+   Mỗi sản phẩm: { id, name, category, price (VND), unit, desc, icon, image }
+   - icon : emoji hiển thị khi CHƯA có ảnh thật.
+   - image: đường dẫn ảnh thật (vd "images/1.jpg"). Có ảnh thì ưu tiên hiện ảnh.
    ============================================================ */
 const PRODUCTS = [
   // --- Nước suối / khoáng ---
@@ -297,6 +302,7 @@ const PRODUCTS = [
   // --- Bia / nước khác ---
   { id: 15, name: "Bia Tiger lon 330ml",     category: "Bia",         price: 16000, unit: "lon",  desc: "Bia lager mát lạnh (18+).",                   icon: "🍺" },
   { id: 16, name: "Nước yến Sanest lọ 70ml", category: "Khác",        price: 18000, unit: "lọ",   desc: "Nước yến bổ dưỡng, tốt cho sức khỏe.",        icon: "🍯" },
+  { id: 17, name: "Cốc đá",                  category: "Khác",        price: 5000,  unit: "cốc",  desc: "Cốc đá lạnh, dùng kèm nước giải khát.",       icon: "🧊" },
 ];
 
 const CART_KEY = "tap_hoa_nuoc_mat_cart";
@@ -361,7 +367,7 @@ function render() {
   }
   grid.innerHTML = list.map(p => `
     <div class="card">
-      <div class="thumb">${p.icon}</div>
+      <div class="thumb">${p.image ? `<img src="${p.image}" alt="${p.name}" loading="lazy">` : p.icon}</div>
       <span class="cat-tag">${p.category}</span>
       <h3>${p.name}</h3>
       <p class="desc">${p.desc}</p>
@@ -437,7 +443,7 @@ function renderCart() {
     const p = getProduct(i.id);
     return `
       <div class="cart-item">
-        <div class="ci-thumb">${p.icon}</div>
+        <div class="ci-thumb">${p.image ? `<img src="${p.image}" alt="${p.name}">` : p.icon}</div>
         <div class="ci-info">
           <div class="ci-name">${p.name}</div>
           <div class="ci-price">${formatVND(p.price)} × ${i.qty} = <strong>${formatVND(p.price * i.qty)}</strong></div>
