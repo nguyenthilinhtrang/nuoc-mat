@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tạp Hóa Nước Mát - Nước Đóng Chai Giao Tận Nơi</title>
+<style>
+  /* ============ BIẾN MÀU & RESET ============ */
+  :root {
+    --primary: #0288d1;
+    --primary-dark: #01579b;
+    --accent: #00bfa5;
+    --bg: #f0f7fb;
+    --card: #ffffff;
+    --text: #1b2733;
+    --muted: #5b6b7a;
+    --border: #e2ecf3;
+    --danger: #e53935;
+    --shadow: 0 4px 18px rgba(2, 136, 209, 0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  button { font-family: inherit; cursor: pointer; border: none; }
+  img { max-width: 100%; }
+
+  /* ============ HEADER ============ */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: #fff;
+    padding: 14px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  }
+  .logo { display: flex; align-items: center; gap: 10px; font-size: 1.25rem; font-weight: 800; }
+  .logo .drop { font-size: 1.6rem; }
+  .cart-btn {
+    position: relative; background: rgba(255,255,255,0.18);
+    color: #fff; padding: 9px 16px; border-radius: 30px;
+    font-size: 1rem; font-weight: 600; display: flex; align-items: center; gap: 8px;
+    transition: background .2s;
+  }
+  .cart-btn:hover { background: rgba(255,255,255,0.30); }
+  .cart-badge {
+    position: absolute; top: -6px; right: -6px;
+    background: var(--accent); color: #fff;
+    min-width: 22px; height: 22px; border-radius: 11px;
+    font-size: 0.78rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; padding: 0 6px;
+    border: 2px solid #fff;
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    background: linear-gradient(120deg, #e1f5fe 0%, #e0f7f4 100%);
+    text-align: center; padding: 46px 20px 38px;
+  }
+  .hero h1 { font-size: 2rem; color: var(--primary-dark); margin-bottom: 10px; }
+  .hero p { color: var(--muted); font-size: 1.05rem; max-width: 560px; margin: 0 auto; }
+  .hero .badges { margin-top: 18px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .hero .badges span {
+    background: #fff; color: var(--primary-dark); padding: 8px 16px;
+    border-radius: 30px; font-size: 0.9rem; font-weight: 600; box-shadow: var(--shadow);
+  }
+
+  /* ============ THANH LỌC & TÌM KIẾM ============ */
+  .controls {
+    max-width: 1100px; margin: 26px auto 0; padding: 0 20px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .search-box {
+    display: flex; align-items: center; gap: 8px;
+    background: #fff; border: 1px solid var(--border); border-radius: 30px;
+    padding: 10px 18px; box-shadow: var(--shadow);
+  }
+  .search-box input { border: none; outline: none; flex: 1; font-size: 1rem; background: transparent; }
+  .filters { display: flex; gap: 10px; flex-wrap: wrap; }
+  .filter-btn {
+    background: #fff; color: var(--muted); border: 1px solid var(--border);
+    padding: 8px 16px; border-radius: 30px; font-size: 0.92rem; font-weight: 600;
+    transition: all .15s;
+  }
+  .filter-btn:hover { border-color: var(--primary); color: var(--primary); }
+  .filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+  /* ============ LƯỚI SẢN PHẨM ============ */
+  .products {
+    max-width: 1100px; margin: 22px auto 60px; padding: 0 20px;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px;
+  }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 18px; display: flex; flex-direction: column;
+    transition: transform .15s, box-shadow .15s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .card .thumb {
+    font-size: 3.4rem; text-align: center; padding: 18px 0;
+    background: linear-gradient(135deg, #f5fbff, #e8f7f4); border-radius: 12px; margin-bottom: 12px;
+  }
+  .card .cat-tag {
+    align-self: flex-start; font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    color: var(--primary); background: #e1f5fe; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px;
+  }
+  .card h3 { font-size: 1.05rem; margin-bottom: 4px; }
+  .card .desc { font-size: 0.85rem; color: var(--muted); flex: 1; margin-bottom: 12px; }
+  .card .price-row { display: flex; align-items: center; justify-content: space-between; }
+  .card .price { font-size: 1.15rem; font-weight: 800; color: var(--primary-dark); }
+  .card .unit { font-size: 0.78rem; color: var(--muted); font-weight: 500; }
+  .add-btn {
+    background: var(--accent); color: #fff; padding: 9px 14px; border-radius: 10px;
+    font-weight: 700; font-size: 0.9rem; transition: background .15s; white-space: nowrap;
+  }
+  .add-btn:hover { background: #009e88; }
+  .empty-msg { grid-column: 1/-1; text-align: center; color: var(--muted); padding: 50px 0; }
+
+  /* ============ DRAWER GIỎ HÀNG ============ */
+  .overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+    opacity: 0; visibility: hidden; transition: opacity .25s; z-index: 90;
+  }
+  .overlay.open { opacity: 1; visibility: visible; }
+  .drawer {
+    position: fixed; top: 0; right: 0; height: 100%; width: 400px; max-width: 90vw;
+    background: #fff; z-index: 100; transform: translateX(100%); transition: transform .28s ease;
+    display: flex; flex-direction: column; box-shadow: -4px 0 24px rgba(0,0,0,0.18);
+  }
+  .drawer.open { transform: translateX(0); }
+  .drawer-head {
+    padding: 18px 20px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .drawer-head h2 { font-size: 1.2rem; }
+  .close-btn { background: none; font-size: 1.5rem; color: var(--muted); line-height: 1; padding: 4px; }
+  .drawer-body { flex: 1; overflow-y: auto; padding: 16px 20px; }
+  .cart-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .cart-item .ci-thumb { font-size: 2rem; width: 48px; text-align: center; }
+  .cart-item .ci-info { flex: 1; }
+  .cart-item .ci-name { font-weight: 600; font-size: 0.95rem; }
+  .cart-item .ci-price { color: var(--muted); font-size: 0.85rem; }
+  .qty-ctrl { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+  .qty-ctrl button {
+    width: 26px; height: 26px; border-radius: 7px; background: #eef4f9;
+    color: var(--primary-dark); font-weight: 700; font-size: 1rem;
+  }
+  .qty-ctrl button:hover { background: #d9e9f4; }
+  .qty-ctrl .qty-num { min-width: 24px; text-align: center; font-weight: 600; }
+  .ci-remove { background: none; color: var(--danger); font-size: 0.82rem; margin-left: auto; align-self: center; }
+  .cart-empty { text-align: center; color: var(--muted); padding: 50px 0; }
+  .drawer-foot { padding: 18px 20px; border-top: 1px solid var(--border); }
+  .total-row { display: flex; justify-content: space-between; font-size: 1.15rem; font-weight: 800; margin-bottom: 14px; }
+  .total-row .total-val { color: var(--primary-dark); }
+  .checkout-btn {
+    width: 100%; background: var(--primary); color: #fff; padding: 14px; border-radius: 12px;
+    font-weight: 700; font-size: 1.05rem; transition: background .15s;
+  }
+  .checkout-btn:hover { background: var(--primary-dark); }
+  .checkout-btn:disabled { background: #b0c4d0; cursor: not-allowed; }
+
+  /* ============ FORM ĐẶT HÀNG & XÁC NHẬN ============ */
+  .form-group { margin-bottom: 14px; }
+  .form-group label { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 5px; }
+  .form-group input, .form-group textarea {
+    width: 100%; padding: 11px 13px; border: 1px solid var(--border); border-radius: 10px;
+    font-size: 0.95rem; font-family: inherit; outline: none;
+  }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--primary); }
+  .form-group textarea { resize: vertical; min-height: 60px; }
+  .back-link { background: none; color: var(--primary); font-weight: 600; font-size: 0.9rem; margin-bottom: 12px; }
+  .confirm-box { text-align: center; padding: 20px 10px; }
+  .confirm-box .check-icon { font-size: 3.5rem; }
+  .confirm-box h2 { color: var(--accent); margin: 10px 0; }
+  .confirm-box .order-code {
+    background: #e8f7f4; color: var(--primary-dark); font-weight: 700;
+    padding: 8px 16px; border-radius: 10px; display: inline-block; margin: 8px 0 16px; letter-spacing: 1px;
+  }
+  .confirm-summary { text-align: left; background: #f7fbfd; border-radius: 12px; padding: 14px; margin-bottom: 16px; }
+  .confirm-summary .cs-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 0.92rem; }
+  .confirm-summary .cs-total { border-top: 1px dashed var(--border); margin-top: 6px; padding-top: 10px; font-weight: 800; }
+
+  /* ============ TOAST ============ */
+  .toast {
+    position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--text); color: #fff; padding: 12px 22px; border-radius: 30px;
+    font-size: 0.92rem; font-weight: 600; opacity: 0; visibility: hidden; transition: all .25s; z-index: 200;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  }
+  .toast.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--primary-dark); color: #cfe8f5; text-align: center;
+    padding: 30px 20px; font-size: 0.9rem;
+  }
+  footer strong { color: #fff; }
+  footer .ft-row { margin: 4px 0; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 1.5rem; }
+    .logo { font-size: 1.05rem; }
+    .cart-btn span.label { display: none; }
+    .products { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+    .card .thumb { font-size: 2.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="logo"><span class="drop">💧</span> Tạp Hóa Nước Mát</div>
+  <button class="cart-btn" onclick="openCart()">
+    🛒 <span class="label">Giỏ hàng</span>
+    <span class="cart-badge" id="cartBadge">0</span>
+  </button>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <h1>Nước đóng chai mát lạnh, giao tận nơi 🚚</h1>
+  <p>Đầy đủ nước suối, nước ngọt, trà, nước tăng lực... giá tạp hóa. Đặt online, ship nhanh trong khu vực!</p>
+  <div class="badges">
+    <span>🚚 Miễn phí ship từ 100.000₫</span>
+    <span>❄️ Luôn mát lạnh</span>
+    <span>⏰ Mở cửa 6:00 - 22:00</span>
+  </div>
+</section>
+
+<!-- ============ THANH LỌC ============ -->
+<div class="controls">
+  <div class="search-box">
+    🔍 <input type="text" id="searchInput" placeholder="Tìm nước suối, Coca, trà xanh..." oninput="render()">
+  </div>
+  <div class="filters" id="filters"></div>
+</div>
+
+<!-- ============ LƯỚI SẢN PHẨM ============ -->
+<main class="products" id="productGrid"></main>
+
+<!-- ============ OVERLAY + DRAWER GIỎ HÀNG ============ -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h2 id="drawerTitle">🛒 Giỏ hàng của bạn</h2>
+    <button class="close-btn" onclick="closeCart()">×</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"><!-- nội dung động --></div>
+  <div class="drawer-foot" id="drawerFoot"><!-- nội dung động --></div>
+</aside>
+
+<!-- ============ TOAST ============ -->
+<div class="toast" id="toast"></div>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="ft-row"><strong>Tạp Hóa Nước Mát</strong> 💧</div>
+  <div class="ft-row">📞 Hotline đặt hàng: 0900 123 456</div>
+  <div class="ft-row">📍 123 Đường Giải Khát, Quận 1, TP.HCM</div>
+  <div class="ft-row">⏰ Mở cửa hằng ngày 6:00 - 22:00</div>
+</footer>
+
+<script>
+/* ============================================================
+   DỮ LIỆU SẢN PHẨM
+   → Muốn thêm/sửa sản phẩm: chỉnh trong mảng PRODUCTS bên dưới.
+   Mỗi sản phẩm: { id, name, category, price (VND), unit, desc, icon }
+   ============================================================ */
+const PRODUCTS = [
+  // --- Nước suối / khoáng ---
+  { id: 1,  name: "Nước suối Lavie 500ml",   category: "Nước suối",   price: 5000,  unit: "chai", desc: "Nước khoáng thiên nhiên, tinh khiết.",        icon: "💧" },
+  { id: 2,  name: "Aquafina 500ml",          category: "Nước suối",   price: 5000,  unit: "chai", desc: "Nước tinh khiết đóng chai Pepsi.",            icon: "💦" },
+  { id: 3,  name: "Nước khoáng Vĩnh Hảo 1.5L",category: "Nước suối",  price: 12000, unit: "chai", desc: "Chai lớn dùng cho gia đình.",                 icon: "🫗" },
+
+  // --- Nước ngọt có gas ---
+  { id: 4,  name: "Coca-Cola lon 330ml",     category: "Nước ngọt",   price: 10000, unit: "lon",  desc: "Vị cola sảng khoái kinh điển.",               icon: "🥤" },
+  { id: 5,  name: "Pepsi lon 330ml",         category: "Nước ngọt",   price: 10000, unit: "lon",  desc: "Đậm vị, đã khát tức thì.",                    icon: "🥤" },
+  { id: 6,  name: "7Up lon 330ml",           category: "Nước ngọt",   price: 10000, unit: "lon",  desc: "Vị chanh the mát lạnh.",                      icon: "🍋" },
+  { id: 7,  name: "Sprite chai 600ml",       category: "Nước ngọt",   price: 12000, unit: "chai", desc: "Soda chanh, sủi bọt tươi mát.",               icon: "🥤" },
+
+  // --- Trà / nước trái cây ---
+  { id: 8,  name: "Trà Xanh 0 Độ 455ml",     category: "Trà",         price: 9000,  unit: "chai", desc: "Trà xanh thanh mát, không lo nóng.",          icon: "🍵" },
+  { id: 9,  name: "Trà C2 360ml",            category: "Trà",         price: 8000,  unit: "chai", desc: "Trà ô long hương chanh.",                     icon: "🍃" },
+  { id: 10, name: "Nước cam Twister 455ml",  category: "Trà",         price: 12000, unit: "chai", desc: "Nước cam ép, giàu vitamin C.",                icon: "🍊" },
+  { id: 11, name: "Trà Dr Thanh 350ml",      category: "Trà",         price: 9000,  unit: "chai", desc: "Trà thảo mộc thanh nhiệt.",                   icon: "🌿" },
+
+  // --- Nước tăng lực ---
+  { id: 12, name: "Red Bull lon 250ml",      category: "Tăng lực",    price: 12000, unit: "lon",  desc: "Tiếp thêm năng lượng tức thì.",               icon: "⚡" },
+  { id: 13, name: "Sting dâu 330ml",         category: "Tăng lực",    price: 10000, unit: "lon",  desc: "Hương dâu, vị ngọt mạnh mẽ.",                 icon: "🔴" },
+  { id: 14, name: "Monster Energy 355ml",    category: "Tăng lực",    price: 22000, unit: "lon",  desc: "Năng lượng cực mạnh cho game thủ.",           icon: "🟢" },
+
+  // --- Bia / nước khác ---
+  { id: 15, name: "Bia Tiger lon 330ml",     category: "Bia",         price: 16000, unit: "lon",  desc: "Bia lager mát lạnh (18+).",                   icon: "🍺" },
+  { id: 16, name: "Nước yến Sanest lọ 70ml", category: "Khác",        price: 18000, unit: "lọ",   desc: "Nước yến bổ dưỡng, tốt cho sức khỏe.",        icon: "🍯" },
+];
+
+const CART_KEY = "tap_hoa_nuoc_mat_cart";
+
+/* ============ STATE ============ */
+let cart = loadCart();          // [{ id, qty }]
+let activeCategory = "Tất cả";
+let drawerView = "cart";        // "cart" | "form" | "confirm"
+let lastOrder = null;
+
+/* ============ TIỆN ÍCH ============ */
+function formatVND(n) {
+  return n.toLocaleString("vi-VN") + "₫";
+}
+function loadCart() {
+  try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
+  catch { return []; }
+}
+function saveCart() {
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+}
+function getProduct(id) { return PRODUCTS.find(p => p.id === id); }
+function cartCount() { return cart.reduce((s, i) => s + i.qty, 0); }
+function cartTotal() { return cart.reduce((s, i) => s + getProduct(i.id).price * i.qty, 0); }
+
+/* ============ TOAST ============ */
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 1800);
+}
+
+/* ============ RENDER BỘ LỌC DANH MỤC ============ */
+function renderFilters() {
+  const cats = ["Tất cả", ...new Set(PRODUCTS.map(p => p.category))];
+  document.getElementById("filters").innerHTML = cats.map(c =>
+    `<button class="filter-btn ${c === activeCategory ? "active" : ""}" onclick="setCategory('${c}')">${c}</button>`
+  ).join("");
+}
+function setCategory(c) {
+  activeCategory = c;
+  renderFilters();
+  render();
+}
+
+/* ============ RENDER LƯỚI SẢN PHẨM ============ */
+function render() {
+  const search = document.getElementById("searchInput").value.trim().toLowerCase();
+  const list = PRODUCTS.filter(p => {
+    const matchCat = activeCategory === "Tất cả" || p.category === activeCategory;
+    const matchSearch = p.name.toLowerCase().includes(search);
+    return matchCat && matchSearch;
+  });
+
+  const grid = document.getElementById("productGrid");
+  if (list.length === 0) {
+    grid.innerHTML = `<div class="empty-msg">😕 Không tìm thấy sản phẩm phù hợp.</div>`;
+    return;
+  }
+  grid.innerHTML = list.map(p => `
+    <div class="card">
+      <div class="thumb">${p.icon}</div>
+      <span class="cat-tag">${p.category}</span>
+      <h3>${p.name}</h3>
+      <p class="desc">${p.desc}</p>
+      <div class="price-row">
+        <div>
+          <div class="price">${formatVND(p.price)}</div>
+          <div class="unit">/ ${p.unit}</div>
+        </div>
+        <button class="add-btn" onclick="addToCart(${p.id})">+ Thêm</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+/* ============ THAO TÁC GIỎ HÀNG ============ */
+function addToCart(id) {
+  const item = cart.find(i => i.id === id);
+  if (item) item.qty++;
+  else cart.push({ id, qty: 1 });
+  saveCart();
+  updateBadge();
+  if (drawerView === "cart") renderCart();
+  showToast("✅ Đã thêm " + getProduct(id).name);
+}
+function updateQty(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+  saveCart();
+  updateBadge();
+  renderCart();
+}
+function removeFromCart(id) {
+  cart = cart.filter(i => i.id !== id);
+  saveCart();
+  updateBadge();
+  renderCart();
+}
+function updateBadge() {
+  document.getElementById("cartBadge").textContent = cartCount();
+}
+
+/* ============ DRAWER: MỞ / ĐÓNG ============ */
+function openCart() {
+  drawerView = "cart";
+  renderCart();
+  document.getElementById("overlay").classList.add("open");
+  document.getElementById("drawer").classList.add("open");
+}
+function closeCart() {
+  document.getElementById("overlay").classList.remove("open");
+  document.getElementById("drawer").classList.remove("open");
+}
+
+/* ============ RENDER NỘI DUNG DRAWER (3 trạng thái) ============ */
+function renderCart() {
+  const title = document.getElementById("drawerTitle");
+  const body = document.getElementById("drawerBody");
+  const foot = document.getElementById("drawerFoot");
+
+  if (drawerView === "confirm") return renderConfirm();
+  if (drawerView === "form")    return renderForm();
+
+  // --- Trạng thái giỏ hàng ---
+  title.textContent = "🛒 Giỏ hàng của bạn";
+  if (cart.length === 0) {
+    body.innerHTML = `<div class="cart-empty">🛒<br><br>Giỏ hàng đang trống.<br>Hãy chọn vài chai nước mát nhé!</div>`;
+    foot.innerHTML = "";
+    return;
+  }
+  body.innerHTML = cart.map(i => {
+    const p = getProduct(i.id);
+    return `
+      <div class="cart-item">
+        <div class="ci-thumb">${p.icon}</div>
+        <div class="ci-info">
+          <div class="ci-name">${p.name}</div>
+          <div class="ci-price">${formatVND(p.price)} × ${i.qty} = <strong>${formatVND(p.price * i.qty)}</strong></div>
+          <div class="qty-ctrl">
+            <button onclick="updateQty(${i.id}, -1)">−</button>
+            <span class="qty-num">${i.qty}</span>
+            <button onclick="updateQty(${i.id}, 1)">+</button>
+            <button class="ci-remove" onclick="removeFromCart(${i.id})">🗑 Xóa</button>
+          </div>
+        </div>
+      </div>`;
+  }).join("");
+  foot.innerHTML = `
+    <div class="total-row"><span>Tổng cộng:</span><span class="total-val">${formatVND(cartTotal())}</span></div>
+    <button class="checkout-btn" onclick="goToForm()">Tiến hành đặt hàng →</button>`;
+}
+
+/* ============ FORM ĐẶT HÀNG ============ */
+function goToForm() {
+  drawerView = "form";
+  renderCart();
+}
+function renderForm() {
+  document.getElementById("drawerTitle").textContent = "📝 Thông tin đặt hàng";
+  document.getElementById("drawerBody").innerHTML = `
+    <button class="back-link" onclick="backToCart()">← Quay lại giỏ hàng</button>
+    <form id="orderForm" onsubmit="placeOrder(event)">
+      <div class="form-group">
+        <label>Họ và tên *</label>
+        <input type="text" id="fName" required placeholder="Nguyễn Văn A">
+      </div>
+      <div class="form-group">
+        <label>Số điện thoại *</label>
+        <input type="tel" id="fPhone" required placeholder="0900 123 456" pattern="[0-9 ]{8,15}">
+      </div>
+      <div class="form-group">
+        <label>Địa chỉ giao hàng *</label>
+        <input type="text" id="fAddr" required placeholder="Số nhà, đường, phường/quận">
+      </div>
+      <div class="form-group">
+        <label>Ghi chú (tùy chọn)</label>
+        <textarea id="fNote" placeholder="Vd: Giao buổi tối, gọi trước khi tới..."></textarea>
+      </div>
+    </form>`;
+  document.getElementById("drawerFoot").innerHTML = `
+    <div class="total-row"><span>Tổng thanh toán:</span><span class="total-val">${formatVND(cartTotal())}</span></div>
+    <button class="checkout-btn" type="submit" form="orderForm">Xác nhận đặt hàng ✓</button>`;
+}
+function backToCart() {
+  drawerView = "cart";
+  renderCart();
+}
+
+/* ============ ĐẶT HÀNG → XÁC NHẬN ============ */
+function placeOrder(e) {
+  e.preventDefault();
+  const order = {
+    code: "DH" + Math.floor(100000 + Math.random() * 900000),
+    name: document.getElementById("fName").value,
+    phone: document.getElementById("fPhone").value,
+    addr: document.getElementById("fAddr").value,
+    note: document.getElementById("fNote").value,
+    items: cart.map(i => ({ ...getProduct(i.id), qty: i.qty })),
+    total: cartTotal(),
+  };
+  lastOrder = order;
+  // Xóa giỏ sau khi đặt thành công
+  cart = [];
+  saveCart();
+  updateBadge();
+  drawerView = "confirm";
+  renderCart();
+}
+function renderConfirm() {
+  const o = lastOrder;
+  document.getElementById("drawerTitle").textContent = "✅ Đặt hàng thành công";
+  document.getElementById("drawerBody").innerHTML = `
+    <div class="confirm-box">
+      <div class="check-icon">🎉</div>
+      <h2>Cảm ơn ${o.name}!</h2>
+      <p>Đơn hàng của bạn đã được ghi nhận.</p>
+      <div class="order-code">Mã đơn: ${o.code}</div>
+      <div class="confirm-summary">
+        ${o.items.map(it => `<div class="cs-row"><span>${it.icon} ${it.name} × ${it.qty}</span><span>${formatVND(it.price * it.qty)}</span></div>`).join("")}
+        <div class="cs-row cs-total"><span>Tổng cộng</span><span>${formatVND(o.total)}</span></div>
+      </div>
+      <div class="confirm-summary">
+        <div class="cs-row"><span>📞 SĐT</span><span>${o.phone}</span></div>
+        <div class="cs-row"><span>📍 Giao tới</span><span style="text-align:right;max-width:60%">${o.addr}</span></div>
+        ${o.note ? `<div class="cs-row"><span>📝 Ghi chú</span><span style="text-align:right;max-width:60%">${o.note}</span></div>` : ""}
+      </div>
+      <p style="color:var(--muted);font-size:0.88rem">Cửa hàng sẽ gọi xác nhận và giao hàng sớm nhất! 🚚</p>
+    </div>`;
+  document.getElementById("drawerFoot").innerHTML = `
+    <button class="checkout-btn" onclick="closeCart(); resetDrawer();">Tiếp tục mua sắm 🛒</button>`;
+}
+function resetDrawer() {
+  drawerView = "cart";
+}
+
+/* ============ KHỞI TẠO ============ */
+renderFilters();
+render();
+updateBadge();
+
+// Đóng drawer khi nhấn Esc
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeCart(); });
+</script>
+</body>
+</html>
