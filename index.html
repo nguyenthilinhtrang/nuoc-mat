@@ -87,6 +87,19 @@
     position: absolute; top: 10px; right: 10px; background: var(--accent); color: #fff;
     font-size: 0.68rem; font-weight: 700; padding: 3px 8px; border-radius: 20px; text-transform: uppercase;
   }
+  .service-card .svc-add {
+    margin-top: 12px; background: var(--accent); color: #fff; padding: 8px 16px;
+    border-radius: 10px; font-weight: 700; font-size: 0.85rem; transition: background .15s;
+  }
+  .service-card .svc-add:hover { background: #009e88; }
+  .service-card .svc-add:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  /* ô ghi chú & nhãn miễn phí trong giỏ hàng */
+  .ci-free { color: var(--accent); font-weight: 700; font-size: 0.85rem; }
+  .ci-note {
+    width: 100%; margin-top: 8px; padding: 8px 10px; border: 1px solid var(--border);
+    border-radius: 8px; font-size: 0.85rem; font-family: inherit; resize: vertical; min-height: 42px; outline: none;
+  }
+  .ci-note:focus { border-color: var(--primary); }
 
   /* ============ THANH LỌC & TÌM KIẾM ============ */
   .controls {
@@ -258,15 +271,8 @@
 <!-- ============ DỊCH VỤ MIỄN PHÍ ============ -->
 <section class="services">
   <h2>🎁 Dịch vụ miễn phí đi kèm</h2>
-  <p class="services-sub">Giao tận sân cầu lông — và hỗ trợ hết mình cho anh em chơi cầu!</p>
-  <div class="services-grid">
-    <div class="service-card"><span class="free-tag">Miễn phí</span><span class="svc-icon">🏸</span><h3>Giao tại sân cầu</h3><p>Ship tận sân, vừa xuống sân là có nước mát.</p></div>
-    <div class="service-card"><span class="free-tag">Miễn phí</span><span class="svc-icon">🛒</span><h3>Mua cầu hộ</h3><p>Hết cầu giữa trận? Gọi shop mua hộ ngay.</p></div>
-    <div class="service-card"><span class="free-tag">Miễn phí</span><span class="svc-icon">🎯</span><h3>Mượn vợt hộ</h3><p>Quên vợt? Shop cho mượn liền tay.</p></div>
-    <div class="service-card"><span class="free-tag">Miễn phí</span><span class="svc-icon">🧵</span><h3>Cuốn cán hộ</h3><p>Cuốn cán vợt giúp, cầm chắc tay hơn.</p></div>
-    <div class="service-card"><span class="free-tag">Miễn phí</span><span class="svc-icon">🍜</span><h3>Mua đồ ăn hộ</h3><p>Đói bụng? Order đồ ăn, shop mua giúp.</p></div>
-    <div class="service-card"><span class="free-tag">Miễn phí</span><span class="svc-icon">📸</span><h3>Chụp ảnh hộ</h3><p>Lưu lại khoảnh khắc đỉnh cao trên sân.</p></div>
-  </div>
+  <p class="services-sub">Giao tận sân cầu lông — và hỗ trợ hết mình cho anh em chơi cầu! Thêm vào giỏ rồi ghi chú nhu cầu của bạn.</p>
+  <div class="services-grid" id="servicesGrid"></div>
 </section>
 
 <!-- ============ THANH LỌC ============ -->
@@ -342,6 +348,19 @@ const PRODUCTS = [
   { id: 15, name: "Bia Tiger lon 330ml",     category: "Bia",         price: 16000, unit: "lon",  desc: "Bia lager mát lạnh (18+).",                   icon: "🍺", image: "images/15.png" },
 ];
 
+/* ============================================================
+   DỊCH VỤ MIỄN PHÍ ĐI KÈM
+   Cũng thêm được vào giỏ; giá 0đ; có ô ghi chú để khách điền chi tiết.
+   ============================================================ */
+const SERVICES = [
+  { id: "sv_giao", name: "Giao tại sân cầu", price: 0, icon: "🏸", isService: true, desc: "Ship tận sân, vừa xuống sân là có nước mát.", notePlaceholder: "Sân nào, mấy giờ giao? (vd: sân Cầu Vồng, 19h)" },
+  { id: "sv_cau",  name: "Mua cầu hộ",       price: 0, icon: "🛒", isService: true, desc: "Hết cầu giữa trận? Gọi shop mua hộ ngay.",      notePlaceholder: "Hãng nào, bao nhiêu? (vd: 1 ống cầu Yonex AS30)" },
+  { id: "sv_vot",  name: "Mượn vợt hộ",      price: 0, icon: "🎯", isService: true, desc: "Quên vợt? Shop cho mượn liền tay.",             notePlaceholder: "Loại vợt, mấy cây? (vd: 2 cây vợt tấn công)" },
+  { id: "sv_can",  name: "Cuốn cán hộ",      price: 0, icon: "🧵", isService: true, desc: "Cuốn cán vợt giúp, cầm chắc tay hơn.",          notePlaceholder: "Cuốn mấy cây, loại cán nào?" },
+  { id: "sv_an",   name: "Mua đồ ăn hộ",     price: 0, icon: "🍜", isService: true, desc: "Đói bụng? Order đồ ăn, shop mua giúp.",         notePlaceholder: "Mua món gì, số lượng? (vd: 2 ổ bánh mì)" },
+  { id: "sv_anh",  name: "Chụp ảnh hộ",      price: 0, icon: "📸", isService: true, desc: "Lưu lại khoảnh khắc đỉnh cao trên sân.",        notePlaceholder: "Chụp lúc nào, yêu cầu gì?" },
+];
+
 const CART_KEY = "tap_hoa_nuoc_mat_cart";
 
 /* ============ STATE ============ */
@@ -361,7 +380,8 @@ function loadCart() {
 function saveCart() {
   localStorage.setItem(CART_KEY, JSON.stringify(cart));
 }
-function getProduct(id) { return PRODUCTS.find(p => p.id === id); }
+/* Tra cứu trong cả sản phẩm lẫn dịch vụ */
+function getProduct(id) { return PRODUCTS.find(p => p.id === id) || SERVICES.find(s => s.id === id); }
 function cartCount() { return cart.reduce((s, i) => s + i.qty, 0); }
 function cartTotal() { return cart.reduce((s, i) => s + getProduct(i.id).price * i.qty, 0); }
 
@@ -419,15 +439,38 @@ function render() {
   `).join("");
 }
 
+/* ============ RENDER THẺ DỊCH VỤ ============ */
+function renderServices() {
+  document.getElementById("servicesGrid").innerHTML = SERVICES.map(s => `
+    <div class="service-card">
+      <span class="free-tag">Miễn phí</span>
+      <span class="svc-icon">${s.icon}</span>
+      <h3>${s.name}</h3>
+      <p>${s.desc}</p>
+      <button class="svc-add" onclick="addToCart('${s.id}')">+ Thêm vào giỏ</button>
+    </div>
+  `).join("");
+}
+
 /* ============ THAO TÁC GIỎ HÀNG ============ */
 function addToCart(id) {
+  const prod = getProduct(id);
   const item = cart.find(i => i.id === id);
-  if (item) item.qty++;
-  else cart.push({ id, qty: 1 });
+  if (item) {
+    // Dịch vụ chỉ cần 1 lần (ghi chú trong giỏ); sản phẩm thì tăng số lượng.
+    if (!prod.isService) item.qty++;
+  } else {
+    cart.push(prod.isService ? { id, qty: 1, note: "" } : { id, qty: 1 });
+  }
   saveCart();
   updateBadge();
-  if (drawerView === "cart") renderCart();
-  showToast("✅ Đã thêm " + getProduct(id).name);
+  if (prod.isService) { openCart(); showToast("✅ Đã thêm dịch vụ — ghi chú nhu cầu trong giỏ nhé!"); }
+  else { if (drawerView === "cart") renderCart(); showToast("✅ Đã thêm " + prod.name); }
+}
+/* Cập nhật ghi chú dịch vụ (không re-render để không mất con trỏ) */
+function updateNote(id, value) {
+  const item = cart.find(i => i.id === id);
+  if (item) { item.note = value; saveCart(); }
 }
 function updateQty(id, delta) {
   const item = cart.find(i => i.id === id);
@@ -478,6 +521,20 @@ function renderCart() {
   }
   body.innerHTML = cart.map(i => {
     const p = getProduct(i.id);
+    const idLit = JSON.stringify(i.id);
+    if (p.isService) {
+      return `
+      <div class="cart-item">
+        <div class="ci-thumb">${p.icon}</div>
+        <div class="ci-info">
+          <div class="ci-name">${p.name} <span class="ci-free">• Miễn phí</span></div>
+          <textarea class="ci-note" placeholder="${p.notePlaceholder}" oninput="updateNote(${idLit}, this.value)">${i.note || ""}</textarea>
+          <div class="qty-ctrl">
+            <button class="ci-remove" onclick="removeFromCart(${idLit})">🗑 Xóa</button>
+          </div>
+        </div>
+      </div>`;
+    }
     return `
       <div class="cart-item">
         <div class="ci-thumb">${p.image ? `<img src="${p.image}?v=${ASSET_VER}" alt="${p.name}">` : p.icon}</div>
@@ -485,10 +542,10 @@ function renderCart() {
           <div class="ci-name">${p.name}</div>
           <div class="ci-price">${formatVND(p.price)} × ${i.qty} = <strong>${formatVND(p.price * i.qty)}</strong></div>
           <div class="qty-ctrl">
-            <button onclick="updateQty(${i.id}, -1)">−</button>
+            <button onclick="updateQty(${idLit}, -1)">−</button>
             <span class="qty-num">${i.qty}</span>
-            <button onclick="updateQty(${i.id}, 1)">+</button>
-            <button class="ci-remove" onclick="removeFromCart(${i.id})">🗑 Xóa</button>
+            <button onclick="updateQty(${idLit}, 1)">+</button>
+            <button class="ci-remove" onclick="removeFromCart(${idLit})">🗑 Xóa</button>
           </div>
         </div>
       </div>`;
@@ -543,7 +600,7 @@ function placeOrder(e) {
     phone: document.getElementById("fPhone").value,
     addr: document.getElementById("fAddr").value,
     note: document.getElementById("fNote").value,
-    items: cart.map(i => ({ ...getProduct(i.id), qty: i.qty })),
+    items: cart.map(i => ({ ...getProduct(i.id), qty: i.qty, note: i.note || "" })),
     total: cartTotal(),
   };
   lastOrder = order;
@@ -564,7 +621,9 @@ function renderConfirm() {
       <p>Đơn hàng của bạn đã được ghi nhận.</p>
       <div class="order-code">Mã đơn: ${o.code}</div>
       <div class="confirm-summary">
-        ${o.items.map(it => `<div class="cs-row"><span>${it.icon} ${it.name} × ${it.qty}</span><span>${formatVND(it.price * it.qty)}</span></div>`).join("")}
+        ${o.items.map(it => it.isService
+          ? `<div class="cs-row"><span>${it.icon} ${it.name}${it.note ? ` — <em>${it.note}</em>` : ""}</span><span class="ci-free">Miễn phí</span></div>`
+          : `<div class="cs-row"><span>${it.icon} ${it.name} × ${it.qty}</span><span>${formatVND(it.price * it.qty)}</span></div>`).join("")}
         <div class="cs-row cs-total"><span>Tổng cộng</span><span>${formatVND(o.total)}</span></div>
       </div>
       <div class="confirm-summary">
@@ -582,8 +641,11 @@ function resetDrawer() {
 }
 
 /* ============ KHỞI TẠO ============ */
+cart = cart.filter(i => getProduct(i.id));   // bỏ item đã xóa khỏi menu
+saveCart();
 renderFilters();
 render();
+renderServices();
 updateBadge();
 
 // Đóng drawer khi nhấn Esc
